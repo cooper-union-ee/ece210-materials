@@ -1,0 +1,45 @@
+\documentclass{article}
+\usepackage{geometry}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{enumitem}
+\usepackage{titling}
+\title{ECE-210-A Assignment I}
+\author{Brian Frost-LaPlante}
+\date{Spring 2018}
+
+\pretitle{\begin{center}\huge}
+\posttitle{\end{center}}
+\preauthor{\begin{center}\small}
+\postauthor{\end{center}}
+\predate{\begin{center}\footnotesize}
+\postdate{\end{center}}
+\setlength{\droptitle}{-40pt}
+
+\begin{document}
+\maketitle
+\noindent In this assignment, you will utilize the basic skills you learned in the first week of class; you will assign values to variables, use some of MATLAB's basic functions, and perform some simple arithmetic operations on scalars and matrices. You should also use this assignment as a way to get comfortable with the \textit{\textbf{help}} and \textit{\textbf{doc}} functions. For your final submission, as always, please suppress all outputs with semicolons. It may be good to get into the habit of beginning your scripts with \textit{\textbf{clc}}, \textit{\textbf{clear all}} and \textit{\textbf{close all}}. Don't remember what these do? Use \textit{\textbf{help}}! 
+\begin{enumerate}[leftmargin=0cm,itemindent=.5cm,labelwidth=\itemindent,labelsep=0cm,align=left,label=\textbf{\arabic*.}]
+\item Create four scalar variables with the values:
+	\begin{itemize}
+		\item $\:\:\text{ln}(9)$
+		\item $\:\:\arcsin(e^{-9})\times10^4$
+		\item $\:\:\text{log}_{10}(\frac{2\pi}{9})$
+		\item $\:\: 9 + j$
+	\end{itemize}
+	Give these variables reasonable and unique names! Then make a column vector containing each of these four values in order as entries. Do this using variable names, i.e. don't just copy and paste the mathematical expressions.
+\item Compute the real part, imaginary part, magnitude and phase of the complex variable from Question 1. Store these four values as variables, then create a row vector with these values as entries. Once again, do this using variable names.
+\item You now have two vectors of length 4, but one is a row vector and one is a column vector. Multiply these two vectors in both orders, giving you two `matrices' of different sizes. Store these values in variables. 
+\item Still using the vectors from Questions 1 and 2, transpose one of them so that both are column vectors (be sure to only conduct the regular transpose, not conjugate transpose). Now find the elementwise product of these two vectors, which will itself be a length 4 column vector. Using \textit{\textbf{repmat}}, create a 4x4 matrix whose columns are each this vector. 
+\item From Questions 3 and 4 you should have two 4x4 matrices. Perform the following operations on these matrices and store the outputs as variables:
+	\begin{itemize}
+		\item $\:\:$Matrix multipliplication in either order
+		\item $\:\:$Elementwise multiplication
+		\item $\:\:$Conjugate transpose of either matrix
+		\item $\:\:$Inverse of the sum of either matrix with the 4x4 identity
+		\item $\:\:$Square of either matrix
+	\end{itemize}
+\item One of your vector multiplies from Question 3 should have given you a complex scalar. Use the MATLAB function \textit{\textbf{fix}} (use \textit{\textbf{doc}} to see exactly what this does) to round down the \textit{real part} of this value. Store this natural number as a variable called $n$. Create two vectors: one containing 1000 evenly spaced points between 1 and $n$, the second containing values between 1 and $n$ spaced in intervals of size 0.1. Use the more natural of the colon operator or \textit{\textbf{linspace}} to create these vectors; you should wind up using both!
+\end{enumerate}
+
+\end{document}
