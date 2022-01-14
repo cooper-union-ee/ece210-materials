@@ -1,0 +1,29 @@
+\documentclass{article}
+\usepackage{geometry}
+\title{ECE-210-B Homework 5}
+\author{Samuel Maltz}
+\date{Spring 2020}
+\usepackage{fancyhdr}
+
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{Samuel Maltz}
+\lhead{ECE-210B Homework 5}
+\rfoot{\thepage}
+
+\renewcommand{\headrulewidth}{0pt}
+
+\begin{document}
+\noindent In this homework, we will go through a few advanced data structures in MATLAB, such as cell arrays, classes, chars, as well as dataset importing in MATLAB. You will be importing in the fisheriris dataset and encapsulating it in classes. After obtaining all the data, you will be required to write some methods for the class you just created. Also note that some operations will require you to do some research, but not too much!
+\begin{enumerate}
+\item Load in the \textit{fisheriris} dataset with the command \textit{load fisheriris}. You should obtain a 150x4 matrix called meas, as well as a 150x1 cell array called species in your workspace. This is a very popular dataset, and you can quickly google fisheriris to see what the columns of meas represent.
+	\begin{itemize}
+		\item Create a class called \textit{Flower} in its own .m file. In your \textit{Flower} class, you should have the following properties – petalWidth (double), petalLength(double), sepalWidth (double), sepalLength (double) and species (char). The ith species corresponds to the ith row of information in meas. Note that you do not need to specify the data type of the properties when you are declaring a class the following properties are just here to impress on you what type of properties you would be expecting.
+		\item Create a constructor for your class. It should take in 4 doubles and a char array corresponding, in order, to the five properties of your class. 
+		\item Now, import the entries from meas and species into MATLAB and store them in a 150x1 cell array of \textit{Flower} instances. You can either use a for loop to import the entries, or use a more elegant way to make all entries in one line (this would require some research on object formation in MATLAB). Either way is ok. However, note that the name of the species are stored as cell arrays; make sure to \textbf{extract} from the cell as a char and \textbf{remove trailing white spaces} before storing them in the \textit{Flower} instances. There is a single function that will do this, which you should be able to find with a quick google search.
+		\item Create a method called \textit{getSWidth} for the \textit{Flower} class, which will return the sepal length of the object. Use this on the 30th Flower in your cell array, and check (using ==) that this is the correct value by looking that the corresponding entry in meas.
+		\item  Create another method called \textit{report} for the \textit{Flower} object, which will print out a statement on the command window and report the details about the \textit{Flower} object. This function does not need to return anything. It should print out a statement of the following form if the flower is 5.1 cm in sepal length, 3.5 cm in sepal width, 1.4 cm in petal length and 0.2 cm in petalWidth, and the species is setosa, for example: “The length and width of its sepal are 5.1 cm and 3.5cm respectively, while the length and width of its petal are 1.4cm and 0.2cm respectively. It belongs to the setosa species.”
+
+	\end{itemize}
+\end{enumerate}
+\end{document}

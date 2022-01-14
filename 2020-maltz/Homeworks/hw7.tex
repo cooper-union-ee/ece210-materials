@@ -1,0 +1,39 @@
+\documentclass[12pt]{article}
+\usepackage{geometry}
+\title{ECE-210-B Homework 7}
+\author{Samuel Maltz}
+\date{Spring 2020}
+\usepackage{fancyhdr}
+
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{Samuel Maltz}
+\lhead{ECE-210B Homework 7}
+\rfoot{\thepage}
+
+\renewcommand{\headrulewidth}{0pt}
+
+\begin{document}
+\noindent In this assignment, you will reinforce what we did in lecture today regarding MATLAB’s filter toolbox.
+\\ \\
+For each of the following questions, you will create a filter, create magnitude-phase plots for the filter and apply the filter to a signal. Follow these steps:
+\begin{itemize}
+\item Generate MATLAB code for filters using the filter design toolbox in the signal processing toolbox (\textbf{\textit{filterDesigner}}).
+\item Create a filter object by calling the generated code.
+\item Use the DSP toolbox's version of \textbf{\textit{freqz}} on the filter object. Make sure to include the sampling frequency in the function call as this is hardly mentioned in the documentation. For example, if $filter$ is a filter object, $n$ is the number of points (you can use 1024) and $fs$ is the sampling frequency, run $[H,f] = freqz(filter,n,fs)$. Note I use $f$ instead of $w$ since by including the sampling frequency, MATLAB scales the frequencies from $[0,\pi]$ to $[0,fs/2]$. Hence these frequencies have units of Hertz. Keep that in mind when including units in your plots and setting the axis limits.
+\item Create magnitude-phase plots akin to homework 6 except for the difference mentioned above regarding $f$.
+\item Apply the filter to the signal using \textbf{\textit{filter}} (check the documentation for the DSP toolbox version).
+\item Lastly, plot the Fourier Transform of the final result using \textbf{\textit{fft}} and \textbf{\textit{plot}}. Refer to the notes for the proper way to use \textbf{\textit{fft}} and obtain the proper scaling.
+\end{itemize}
+
+\noindent This may seem daunting, but with properly defined functions, you may only have to do most of the work once. However, I still want unique titles for plots (maybe pass in a string?).
+
+\begin{enumerate}
+\item  Generate a signal that consists of a sum of sine waves of frequencies 1 to 50 kHz. Set $t$ to be from 0 to 2 seconds, using an interval of 0.001s.
+$$signal = \sum_{f = 1}^{50000}\sin(2\pi ft)$$
+\item Create a Butterworth lowpass filter with a sampling frequency of Fs = 100 kHz, a passband frequency of Fpass = 10 kHz, a stopband frequency of Fstop = 20 kHz, a passband attenuation of Apass = 5dB, and a stopband attenuation of Astop = 50dB.
+\item Create a Chebychev I highpass filter with a sampling frequency of Fs = 100 kHz, a passband frequency of Fpass = 35 kHz, a stopband frequency of Fstop = 15 kHz, a passband attenuation of Apass = 2dB, and a stopband attenuation of Astop = 40dB.
+\item Create a Chebychev II bandstop filter with a sampling frequency of Fs = 100 kHz, a passband frequency of below the frequency Fpass1 = 5 kHz and above Fpass2 = 45 kHz, a stopband frequency of between Fstop1 = 15 kHz Fstop2 = 35kHz, a passband attenuation of Apass = 5dB, and a stopband attenuation of Astop = 50dB.
+\item Create a Elliptic bandpass filter with a sampling frequency of Fs = 100 kHz, a stopband frequency of below the frequency Fstop1 = 15 kHz and above Fstop2 = 35 kHz, a passband frequency of between Fpass1 = 20 kHz Fpass2 = 30 kHz, a passband attenuation of Apass = 5dB, and a stopband attenuation of Astop = 50dB.
+\end{enumerate}
+\end{document}

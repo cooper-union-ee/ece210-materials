@@ -1,0 +1,35 @@
+\documentclass[12pt]{article}
+\usepackage{geometry}
+\title{ECE-210-B Homework 9}
+\author{Samuel Maltz}
+\date{Spring 2020}
+\usepackage{fancyhdr}
+\usepackage{amsmath}
+
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{Samuel Maltz}
+\lhead{ECE-210B Homework 9}
+\rfoot{\thepage}
+
+\renewcommand{\headrulewidth}{0pt}
+
+\begin{document}
+\noindent In this homework you will run a few probability simulations. For each question, run a simulation to estimate the probability, pmf or expectation (do not compute the results theoretically!). Use a large number $N$ of observations in all your simulations. Try to vectorize your operations as much as possible (i.e. don't use too many for loops).
+\begin{enumerate}
+\item A few probability simulations (do each one separately, all dice are fair):
+\begin{itemize}
+\item Probability that the result of a 6-sided die is even.
+\item If a roll of a 6-sided die is less than 3, another 6-sided die is rolled. If not, the second die is not rolled. Find the probability that a second die is rolled and is greater than 4.
+\item Two 6-sided dice are rolled. Find the probability that the sum is 8 given that the first roll was 4 or higher.
+\item Two 6-sided dice are rolled. The second die is a multiplying factor for the first (i.e. multiply the first die's result by the second die's result). Find the expected value.
+\end{itemize}
+\item Sample from the Poisson distribution with $\lambda = 5$. For each sample, sample again from the binomial distribution with $p = 0.4$ and $n$ equal to the Poisson sample. If the Poisson sample was equal to 0, don't sample from the binomial and just return 0 for that sample. In subplots, plot histograms of the pmf from the result of this simulation and a different sampling from the Possion distribution with $\lambda' = \lambda p$. If you have background in Probability, think of the example where people enter a room at rate $\lambda$ and each person is given a prize with probability 0.4. Then think of this distribution as the number of prize winners in one second.
+\item Think about how to represent this simulation with a MATLAB function and then implement it:
+\begin{itemize}
+\item Suppose $m$ balls were put in a bag. The balls are numbered from 1 to $m$. Then the balls are picked out of the bag without replacement. Find the probability that at all the picks, the corresponding numbered ball was not chosen (i.e. the first ball was not picked on the first pick and the second ball was not picked on the second pick...). 
+\item Plot this as a function of $m$ from $m = 1$ to $m = 100$. Just to be clear, you'll be doing $N$ simulations for each value of $m$. 
+\item Now do the same but this time pick with replacement (stop at $m$ picks). Both probabilities actually converge to the same number as $m \rightarrow \infty$! (It's $1/e$)
+\end{itemize}
+\end{enumerate}
+\end{document}

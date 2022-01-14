@@ -1,0 +1,137 @@
+
+% This LaTeX was auto-generated from MATLAB code.
+% To make changes, update the MATLAB code and republish this document.
+
+\documentclass{article}
+\usepackage{graphicx}
+\usepackage{color}
+
+\sloppy
+\definecolor{lightgray}{gray}{0.5}
+\setlength{\parindent}{0pt}
+
+\begin{document}
+
+    
+    
+\section*{ECE302 Project 2: Estimation Techniques}
+
+
+\subsection*{Contents}
+
+\begin{itemize}
+\setlength{\itemsep}{-1ex}
+   \item Scenario 1
+   \item Bayes MMSE Estimator
+\end{itemize}
+
+
+\subsection*{Scenario 1}
+
+\begin{par}
+An implementation of a Bayes MMSE and Linear MMSE estimators of the random variable Y from the random variable X where X = Y + W. Here Y \ensuremath{\tilde{\;}} U(-1,1) and W \ensuremath{\tilde{\;}} U(-2,2). Note that in this project, N represents the number of samples taken from the respective distributions.
+\end{par} \vspace{1em}
+\begin{verbatim}
+clear;
+clc;
+close all;
+
+N = 10000;
+
+Y1 = random('Uniform',-1,1,N,1);
+W = random('Uniform',-2,2,N,1);
+X1 = Y1 + W;
+\end{verbatim}
+
+
+\subsection*{Bayes MMSE Estimator}
+
+\begin{par}
+Here we take $\hat{y} = E[Y | X = x]$. Calculating this condition expectation leads to: \begin{verbatim}latex\end{verbatim} \ensuremath{\backslash}usepackage\{mathworks\} \ensuremath{\backslash}[ \ensuremath{\backslash}hat\{y\} =       \ensuremath{\backslash}begin\{cases\}       0 \& x\ensuremath{\backslash}leq 0 \ensuremath{\backslash}\ensuremath{\backslash}       \ensuremath{\backslash}frac\{100-x\}\{100\} \& 0\ensuremath{\backslash}leq x\ensuremath{\backslash}leq 100 \ensuremath{\backslash}\ensuremath{\backslash}       0 \& 100\ensuremath{\backslash}leq x    \ensuremath{\backslash}end\{cases\} \ensuremath{\backslash}] \begin{verbatim}/latex\end{verbatim}
+\end{par} \vspace{1em}
+\begin{verbatim}
+Y1est = zeros(N,1);
+for i = 1:N
+    if X1(i) < -1
+        Y1est(i) = .5 + .5*X1(i);
+    elseif X1(i) < 1
+        Y1est(i) = 0;
+    else
+        Y1est(i) = -.5 + .5*X1(i);
+    end
+end
+
+empmmse1 = mean((Y1 - Y1est).^2);
+
+actmmse1 = .25;
+\end{verbatim}
+\begin{verbatim}
+Y1est = (1/5)*X1;
+
+emplmmse1 = mean((Y1 - Y1est).^2);
+
+actlmmse1 = 4/15;
+\end{verbatim}
+\begin{verbatim}
+table([empmmse1; emplmmsel],[actmmse1; actlmmse1],'VariableNames', ...
+    ["Empirical MSE","Theorhetical MSE"],'RowNames', ...
+    ["MMSE","LMMSE"])
+\end{verbatim}
+
+        \color{lightgray} \begin{verbatim}Unrecognized function or variable 'emplmmsel'.
+
+Error in proj2 (line 55)
+table([empmmse1; emplmmsel],[actmmse1; actlmmse1],'VariableNames', ...
+\end{verbatim} \color{black}
+    \begin{verbatim}
+m = 5;
+n = 5;
+
+Y2est = zeros(N,m);
+emplmmse2 = zeros(1,m);
+actlmmse2 = zeros(1,m);
+leg = strings(1,m);
+
+for j = 1:m
+    muY2 = 1;
+    varY2 = j;
+    varR = j;
+
+    Y2 = random('Normal',muY2,sqrt(varY2),N,1);
+    R = random('Normal',muR,sqrt(varR),N,n);
+    X2 = Y2 + R;
+
+    CXX = varY2*ones(n) + diag(varR*ones(1,n));
+    CXY = varY2*ones(n,1);
+
+    a = CXX\CXY;
+
+    a0 = muY2 - dot(a,muY2*ones(n,1));
+
+    Y2est(:,j) = a0 + dot(repmat(a',N,1),X2,2);
+
+    emplmmse2(j) = mean((Y2 - Y2est(:,j)).^2);
+
+    actlmmse2(j) = varY2 - CXY'*a;
+
+    leg(j) = "\sigma_Y^2 = " + j + ", \sigma_R^2 = " + j;
+end
+
+sz = 25;
+
+figure;
+for j = 1:m
+    scatter(emplmmse2(j),actlmmse2(j),sz,j,'filled','DisplayName',leg(j));
+    hold on;
+end
+xlabel("Empirical LMMSE");
+ylabel("Theorhetical LMMSE");
+legend('location','northwest');
+grid on;
+title("LMMSE with " + n + " observations");
+\end{verbatim}
+
+
+
+\end{document}
+    

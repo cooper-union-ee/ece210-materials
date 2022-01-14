@@ -1,0 +1,48 @@
+\documentclass[11pt]{article}
+\usepackage{geometry}
+\title{ECE-210-B Homework 1}
+\author{Samuel Maltz}
+\date{Spring 2020}
+\usepackage{fancyhdr}
+
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{Samuel Maltz}
+\lhead{ECE-210B Homework 1}
+\rfoot{\thepage}
+
+\renewcommand{\headrulewidth}{0pt}
+
+\begin{document}
+\noindent In this assignment, you will utilize the basic skills you learned in the first week of class; you will assign values to variables, use some of MATLAB’s basic functions, and perform some simple arithmetic operations on scalars and matrices. You should also use this assignment as a way to get comfortable with the \textit{\textbf{help}} and \textit{\textbf{doc}} functions. For your final submission, as always, please suppress all outputs with semicolons. Separate each question into separate sections. It may be good to get into the habit of beginning your scripts with \textit{\textbf{clc}}, \textit{\textbf{clear}} and \textit{\textbf{close all}}. Don’t remember what these do? Use \textit{\textbf{help}}!
+
+\begin{enumerate}
+\item Create scalar variables with the following values:
+	\begin{itemize}
+		\item $\log_{10}(26)$
+		\item $5e^{j\frac{2\pi}{3}}$
+		\item $\arctan(\sqrt{15}) + 34$
+		\item $\frac{\sqrt{3}}{2} + j\frac{1}{2}$
+	\end{itemize}
+Give these variables unique and reasonable names. Using these variables (not the expressions) create a column vector with each variable as an entry.
+\item You should have two complex variables from the previous question. Multiply the two together (using the variables again) and save that as a variable. Compute  the real part, imaginary part, magnitude and angle of the resulting complex number and create a row vector using those values as entries.
+\item Now with the two vectors from the previous questions, create and save as variables two 4x4 matrices as follows:
+	\begin{itemize}
+		\item Regular matrix multiplication (make sure the vectors are in the right order! I want a 4x4 matrix, not a scalar, i.e. an outer product, not an inner product)
+		\item Transpose (regular transpose not conjugate transpose) the column vector and multiply it elementwise with the row vector. Then use \textit{\textbf{repmat}} to extend this row vector to a 4x4 matrix (use \textit{\textbf{help}} or \textit{\textbf{doc}} if you don't remember how to use \textit{\textbf{repmat}}).
+	\end{itemize}
+\item With these two matrices, perform the following operations (save the results as variables):
+	\begin{itemize}
+		\item Add the first and two times the second
+		\item Elementwise multiply them
+		\item Subtract two from every entry in the first matrix
+		\item Conjugate transpose either one
+	\end{itemize}
+\item Take the angle of the complex number in question 2 and convert it to degrees (check out \textit{\textbf{rad2deg}}). It should be an integer. Save the value as \textit{n}. Then create these two row vectors:
+	\begin{itemize}
+		\item A length 2000 vector with equally spaced entries from 1 to \textit{n}
+		\item A vector with entries starting at one up to \textit{n} with entries spaced at intervals of 0.3 (the vector may turn out to not include \textit{n})
+	\end{itemize}
+You will be using both \textit{\textbf{linspace}} and the colon operator here. Make sure to use the right one for each!
+\end{enumerate}
+\end{document}

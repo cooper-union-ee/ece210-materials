@@ -1,0 +1,59 @@
+\documentclass[12pt]{article}
+\usepackage{geometry}
+\title{ECE-210-B Homework 8}
+\author{Samuel Maltz}
+\date{Spring 2020}
+\usepackage{fancyhdr}
+\usepackage{amsmath}
+
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{Samuel Maltz}
+\lhead{ECE-210B Homework 8}
+\rfoot{\thepage}
+
+\renewcommand{\headrulewidth}{0pt}
+
+\begin{document}
+\noindent In this homework, you will explore the topics of the past two lectures: state space and the symbolic toolbox.
+\begin{enumerate}
+\item Here you will check the functionality of \textbf{\textit{ss2tf}} against the symbolic toolbox through this continuous state space system:
+$$A = \begin{bmatrix}
+-4 & 4 \\
+-2 & 0\end{bmatrix}$$
+$$B = \begin{bmatrix}
+0 \\
+2
+\end{bmatrix}$$
+$$C = \begin{bmatrix}
+1 & 0
+\end{bmatrix}$$
+$$D = \begin{bmatrix}
+0
+\end{bmatrix}$$
+\begin{itemize}
+\item First check (show me) to make sure the real part of all of the eigenvalues are negative, thus making the system stable.
+\item Next check the norm of $e^{At}$ over a large enough time $t$ and show in a plot that it decays to 0. Caution: the regular \textbf{\textit{exp}} function is not appropriate for matrices, find a function which is.
+\item Now use \textbf{\textit{ss2tf}} and return the transfer function numerator and denominator.
+\item Check your work by using the formula $H(s) = C(sI-A)^{-1}B+D$ with a symbolic variable $s$.
+\item Extract the numerator and denominator of the symbolic rational function using a single function. Then convert these to polynomial vectors using another single function.
+\end{itemize}
+
+\item Consider the system of differential equations below:
+$$\frac{dx}{dt} = y$$
+$$\frac{dy}{dt} = -x-y$$
+Solve the system using the symbolic toolbox's \textbf{\textit{dsolve}} function using four \textit{different} initial conditions (so you should have four sets of solutions):
+$$x(0)=1,y(0)=1$$
+$$x(0)=-1,y(0)=1$$
+$$x(0)=1,y(0)=-1$$
+$$x(0)=-1,y(0)=-1$$
+Then plot all four curves on the same plot from $t=0$ to $t=100$ using \textbf{\textit{fplot}} (use a legend). It should be a spiral.
+
+\item
+\begin{enumerate}
+\item Create a function which takes in a matrix $A$ and plots (use \textbf{\textit{semilogy}}) $||e^{At}||_F$ and $e^{\alpha t}$ on the same plot for $0\leq t \leq 100$ (you can sample $t$ at integer values) where $\alpha = max(Re(\Lambda(A)))$ (maximum real part of the eigenvalues of $A$) and $||\cdot||_F$ is the Frobenius norm. In your main script call this function on a random 10x10 matrix with entries sampled from the standard normal distribution minus 2 times the identity. Check out what happens when $\alpha$ is positive or negative and check out what happens when the eigenvalue which $\alpha$ corresponds to is complex and write what happens in a comment.
+
+\item Create a function which takes in a matrix $A$ and plots (use \textbf{\textit{semilogy}}) $||A^n||_F$ and $\rho^n$ on the same plot for $0\leq n \leq 100$ (you can sample $n$ at integer values) where $\rho = max(|\Lambda(A)|)$ (maximum magnitude of the eigenvalues of $A$) and $||\cdot||_F$ is the Frobenius norm. In your main script call this function on a random 10x10 matrix with entries sampled from a normal distribution with mean 0, variance 0.1. Check out what happens when $\rho$ is less than or greater than 1 and check out what happens when the eigenvalue which $\rho$ corresponds to is complex and write what happens in a comment.
+\end{enumerate}
+\end{enumerate}
+\end{document}
