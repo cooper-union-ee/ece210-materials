@@ -1,0 +1,8 @@
+# LaTeX byproducts
+*.log
+*.aux
+*.log
+*.synctex.gz
+
+# ViM/Emacs tmpfiles
+*~
