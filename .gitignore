@@ -5,9 +5,12 @@
 *.out
 *.synctex.gz
 auto/
+.tex
+_minted*/
 
 # ViM/Emacs tmpfiles
 *~
 
-# MATLAB live scripts
+# MATLAB byproducts
 *.mlx
+*.asv

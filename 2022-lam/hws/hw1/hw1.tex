@@ -1,0 +1,81 @@
+\documentclass{article}
+
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{xcolor}
+\usepackage{textcomp}
+
+\usepackage{minted}
+
+\title{ECE-210-A HW1}
+\author{Instructor: Jonathan Lam}
+\date{Spring 2022}
+
+\begin{document}
+\maketitle
+
+\noindent This assignment ensures that you have MATLAB up and running, and aims to get you comfortable with the basics covered in the first lecture, such as variable assignment, matrix operations, and the MATLAB documentation.
+
+For your submission, either a *.m or *.mlx file is fine -- recall that they are essentially equivalent. (This applies to future submissions as well.)
+
+Remember, Good Code Style\texttrademark\ is important! Here are some recommendations, but feel free to do what suits you, so long as it is consistent and logical.
+\begin{itemize}
+\item Begin your scripts with \mintinline{matlab}|clc|, \mintinline{matlab}|clear| and \mintinline{matlab}|close all|. (Don't remember what these do? Use \mintinline{matlab}|help|!)
+\item Suppress outputs of intermediate values by ending the line with a semicolon. Long outputs printed in the command window are hard to follow. I prefer suppressing all outputs and storing answers in descriptive variables.
+\item Follow a convention for variable names. It can be \mintinline{matlab}|snake_case|, \mintinline{matlab}|camelCase|, \mintinline{matlab}|PascalCase|, \mintinline{matlab}|alllowercase|, etc. Names that are too short (e.g., \mintinline{matlab}|x|) are not descriptive, and \mintinline{matlab}|variableNamesThatAreTooLongLikeThis| become tedious. The exception to the first rule is when the name is clear from context, e.g., \mintinline{matlab}|x| and \mintinline{matlab}|t| to denote time series data, but even then it is usually nice to subscript them (e.g., \mintinline{matlab}|x_1| and \mintinline{matlab}|t_1| if you are working with multiple time-series). Be sensible!
+  
+\item Long lines tend to be hard to read, especially on smaller screens. Try to limit lines to 80 characters. (MATLAB has a visual indicator for this.) To break an expression over multiple lines, use ellipses (\mintinline{matlab}|...|), e.g.:
+\begin{minted}{matlab}
+this_is_a_long_variable_name ...
+	= some_long_expression ...
+	* another_long_expression;
+\end{minted}
+  
+\item Use comments to explain code. (Recall that comments start with \mintinline{matlab}|%|.) The better and more consistently your variables are named, the less commenting you need to keep your code maintainable.
+  
+\item Using sections and consistent spacing makes for easier reading/debugging. Section separators must have two percent signs at the beginning of the line, followed by the space, followed by the section title.
+\end{itemize}
+
+\clearpage
+(For this first assignment, don't worry too much about variable names.)
+\begin{enumerate}
+\item Create (scalar) variables with the values:
+  \begin{itemize}
+  \item $||7+24j||$
+  \item $j^{j^j}$
+  \item $\sec^{-1}(5-j)$
+  \item The positive root of $5x^2-4x-3$, by writing out the quadratic formula.
+  \end{itemize}
+  Then make a row vector $E$ containing each of these four values in order as its elements. Do this using variable names, i.e. don't repeat the mathematical expressions.
+  
+\item Compute the real part, imaginary part, magnitude and phase of the two complex variables in $E$. Store these values in a $4\times 2$ matrix $A$, with each column representing one of the complex numbers.
+  
+\item Create and store in a variable $B$ the $4\times 1$ vector which contains the row-wise means of $A$ using the \mintinline{matlab}|mean| command.
+
+  \item What happens if you try to do $A+B?$ What about $A+1$? What about $A+E$? Describe what happens.
+  
+\item Perform the following operations, saving each result in a new variable:
+  \begin{enumerate}
+  \item $A^TB$ (use the regular transpose, not the conjugate transpose)
+  \item $B$ with each element decreased by 2
+  \item Use \mintinline{matlab}|repmat| (alternatively, see \mintinline{matlab}|help horzcat|) to repeat $A$ into a $4\times 4$ matrix. Call this $C$.
+  \item $C-AA^T$ (again, regular transpose)
+  \item Elementwise multiplication of $C$ with itself
+  \item Elementwise square of $C$
+  \item $C^2$
+  \item $\text{trace}(C-D)$, where $D$ is the $4\times 4$ identity matrix.
+  \end{enumerate}
+  
+\item Generate the following ranges (vectors) using the more appropriate method covered in class (i.e., using \mintinline{matlab}|linspace| or the colon operator). (Please suppress these outputs!)
+  \begin{itemize}
+  \item A length 1000 vector of equally-spaced values from $\-\pi$ to $e$, inclusive.
+  \item The vector of time samples, in units of seconds, if you sample at 7MHz for 2 seconds (i.e., between $t=0$ and $t=2$). (E.g., sampling at 2Hz for 3 seconds would give you the vector \mintinline{matlab}|[0 0.5 1 1.5 2 2.5 3]|.)
+  \end{itemize}
+  
+\item \textit{(Optional fun)} Try the exercises above in Python using the numpy library. Note how similar the syntax is.
+\end{enumerate}
+\end{document}
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:
