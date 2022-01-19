@@ -4,6 +4,10 @@
 *.log
 *.out
 *.synctex.gz
+auto/
 
 # ViM/Emacs tmpfiles
 *~
+
+# MATLAB live scripts
+*.mlx
