@@ -1,4 +1,4 @@
-%% Lesson 3a: Advanced Indexing
+%% Lesson 3: Advanced Indexing
 %
 % Objectives:
 % - Review basic vector indexing

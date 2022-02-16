@@ -1,4 +1,4 @@
-%% Lesson 3b: Functions
+%% Lesson 4a: Functions
 %
 % Objectives:
 % - Explore MATLAB's function-calling syntax and semantics.
