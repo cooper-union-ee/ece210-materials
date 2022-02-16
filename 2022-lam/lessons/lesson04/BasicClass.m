@@ -1,13 +1,13 @@
 classdef BasicClass
-    %BasicClass just a basic class
+    % BasicClass is a simple sample class definition
     properties (Access = private)
         vals     % vector
     end
     
     methods
         function obj = BasicClass(x)
-            %BasicClass Construct an instance of this class
-            %   Sets x to the object's vals property
+            % Construct an instance of this class
+            % Sets x to the object's vals property
             obj.vals = x;
         end
         
@@ -16,8 +16,8 @@ classdef BasicClass
         end
         
         function z = findClosest(obj,n)
-            %findClosest find closest entry in obj.vals to n
-            [~,ind] = min(abs(obj.vals-n));
+            % Find closest entry in obj.vals to n
+            [~, ind] = min(abs(obj.vals - n));
             z = obj.vals(ind);
         end
     end
