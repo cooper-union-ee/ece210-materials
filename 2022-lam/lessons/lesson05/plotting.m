@@ -1,4 +1,4 @@
-%% Lesson 4c: Plotting
+%% Lesson 5a: Plotting
 %
 % We are going to go through several plotting schemes, and explore how you
 % can customize plotting. We would go through 2D plotting, surface
