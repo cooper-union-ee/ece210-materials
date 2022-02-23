@@ -3,10 +3,16 @@
 % We are going to go through several plotting schemes, and explore how you
 % can customize plotting. We would go through 2D plotting, surface
 % plotting, subplot, stem plot and 3D plotting
-
+%
+% In this file the `command syntax` style of functions will be used when
+% possible, just to get you familiar with the style.
 clear; clc; close all;
 
 %% 2D plotting: line graphs
+% In general, always annotate your plots appropriately! Use a title,
+% axis labels, legends, etc. as necessary. Set appropriate bounds,
+% appropriate scaling (e.g., linear vs. logarithmic), and the correct
+% type of plot. We'll start simple with line plots.
 x = -10:0.1:10;
 y = x.^3;
 y2 = x.^2;
@@ -18,9 +24,9 @@ plot(x, y2, 'DisplayName', 'x^2');
 
 hold off;
 
-xlabel('x axis');
-ylabel('y axis');
-title('Example 1');
+xlabel 'x axis';
+ylabel 'y axis';
+title 'Example 1';
 xlim([-10 10]);
 ylim([-10 10]);
 % axis([-10 10 -10 10]);
@@ -42,26 +48,33 @@ plot(t, d1);
 plot(t, d2);
 hold off;
 
-title('Trig Functions');
-xlabel('time \mus');    % \mus is a special symbol. Other examples include:
-                        % \beta, \pi, \leq, \infty 
-ylabel('voltage');
-legend('sin','cos');
+title 'Trig Functions';
+
+% We can use some LaTeX-like symbols like \mu, \beta, \pi, \leq, \infty.
+% For full LaTeX support use the `Interpreter: latex` option
+xlabel 'time (\mu)s';
+
+ylabel voltage;
+legend sin cos;
 
 % Save to file; gcf() is "get current figure"
-exportgraphics(gcf(), "sample_plot.png")
+exportgraphics(gcf(), "sample_plot.png");
 
-%% Here we are going to get a bit fancy and change up some stuff. 
+%% More plotting options
+% Legends, axis ticks (and labels), LaTeX interpreter
 figure;
 
-plot(t,d1,'b-.',t,d2,'rp') % We are changing up the line pattern and color
-title('Trig Functions')
-xlabel('time \mus') % \mus is a special symbol. Other examples include:
-                    % \beta, \pi, \leq, \infty 
-ylabel('voltage')
-legend('sin','cos')
-xticks(0:pi/2:10)
-xticklabels({'0','\pi/2','\pi','3\pi/2','2\pi', '5\pi/2','3\pi'})
+% Options for changing line pattern and color.
+% Don't need `hold on`/`hold off` if multiple lines plotted with a single
+% `plot` function.
+plot(t, d1, 'b-.', t, d2, 'rp');
+
+title 'Trig Functions';
+xlabel 'time ($\mu$s)' Interpreter latex
+ylabel voltage;
+legend('sin', 'cos');
+xticks(0:pi/2:10);
+xticklabels({'0', '\pi/2', '\pi', '3\pi/2', '2\pi', '5\pi/2', '3\pi'});
 
 % Many other options availible for plotting. Check the documentation or
 % search online for options.
@@ -75,49 +88,51 @@ xticklabels({'0','\pi/2','\pi','3\pi/2','2\pi', '5\pi/2','3\pi'})
 % indexing.
 
 figure;
-subplot(2,2,1)                    % subplot(# of rows, # of columns, index)
-plot(t,d1)
+subplot(2,2,1);                   % subplot(# of rows, # of columns, index)
+plot(t,d1);
 hold on;
-plot(t,d2)
-title('Normal plot')
+plot(t, d2);
+title 'Normal plot';
 
-subplot(2,2,2)                    % index runs down rows, not columns!
-plot(t,d1,'b-.',t,d2,'rp')
-title('Customized plot')
+subplot(2, 2, 2);                 % index runs down rows, not columns!
+plot(t, d1, 'b-.', t, d2, 'rp');
+title 'Customized plot';
 
 %% Stem plots
 % stem plots are particularly useful when you are representing digital
 % signals, hence it is good (and necessary) to learn them too!
 % subplot(2,2,[3 4])                % takes up two slots
 subplot(2, 1, 2);
-stem(t,d1);
 hold on;
-stem(t,d2);
-title('Stem plots');
+stem(t, d1);
+stem(t, d2);
+hold off;
+title 'Stem plots';
 
-sgtitle('Subplots');
+sgtitle Subplots;
 
 %% Tiling -- like subplots but newer
-figure();
+figure;
 tiledlayout(2, 2);
 
-nexttile();
+nexttile;
 plot(t, d1);
 
-nexttile();
+nexttile;
 plot(t, d2);
 
 %% A 3-D parametric function
 % A helix curve
 t = linspace(0,10*pi);
+
 figure;
-plot3(sin(t),cos(t),t)
-xlabel('sin(t)');
-ylabel('cos(t)');
-zlabel('t')
-text(0,0,0,'origin')
+plot3(sin(t), cos(t), t);
+xlabel sin(t);
+ylabel cos(t);
+zlabel t;
+text(0, 0, 0, 'origin');
 grid on;
-title('Helix')
+title Helix;
 
 %% Surface plot
 % A shaded look for 2-D functions
@@ -125,8 +140,9 @@ title('Helix')
 % $f(x) = x\exp -(x^2+y^2)$
 a1 = -2:0.25:2;
 b1 = a1;
-[A1,B1] = meshgrid(a1);
+[A1, B1] = meshgrid(a1);
 F = A1.*exp(-A1.^2-B1.^2);
+
 figure;
 surf(A1,B1,F);
 
