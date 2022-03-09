@@ -1,4 +1,4 @@
-%% Lesson 6b
+%% Lesson 6b: The Z-transform
 % * Have a overview idea of the z transform
 % * Know how to plot pole zero plots of the z transform, and what to infer
 % * Know how to input a signal to the transfer function of z transform
