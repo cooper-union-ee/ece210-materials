@@ -2,15 +2,17 @@
 % * Have a overview idea of the z transform
 % * Know how to plot pole zero plots of the z transform, and what to infer
 % * Know how to input a signal to the transfer function of z transform
+clc; clear; close all;
 
 %% Review
+% Plot all discrete-time signals with `stem()`! Don't use `plot()`.
 x = [2 4 7 2 0 8 5];
 stem(x);
 title("Discrete Time signal");
 
 %% Overview of the z transform
-% The z transform converts a discrete time signal, which can be represented
-% in real or complex numbers, into a sequence of complex exponentials.
+% The z transform converts a discrete time signal into a complex frequency
+% domain representation (a series of complex exponentials).
 % There are two key motivations of the z transform:
 %
 % * By identifying the impulse response of the system we can determine how
@@ -66,15 +68,11 @@ b = [2 3 0];
 a = [1 1/sqrt(2) 1/4];
 
 [z, p, k] = tf2zp(b, a);
+% alternatively, tf2zpk
 
 figure;
 zplane(z, p);
 [b, a] = zp2tf(z, p, k);
-
-%% tf2zpk
-[z, p, k] = tf2zpk(b, a);
-figure;
-zplane(z, p);
 
 %% Z transform - More examples!
 
@@ -109,18 +107,25 @@ title('$$H_3(z)=\frac{(z-\frac{1}{2})^2}{(z-\frac{4}{5})(z-\frac{3}{2})}$$', ...
 % stable and causal.
 
 %% Z transform - Impulse Response
-% The impulse response is useful because the Fourier transform of the
-% impulse response allows us to evaluate what is going to happen at
-% different frequencies.
+% The impulse response is useful because its Fourier transform 
+% (the frequency response) allows us to observe how an input sinusoid
+% at different frequencies will be transformed.
 %
+% The impulse response is obtained by applying the filter to a delta.
+% There is a custom function to do this (`impz`), but you can also obtain
+% it other ways.
+% 
+% The impulse response for the running example is the following (can you
+% derive this by hand?)
 % $h[n] = (1/2)^n$
-[h1, t] = impz(b1, a1, 8);     % h is the IMPULSE RESPONSE
+[h1, t] = impz(b1, a1, 8);   % h is the IMPULSE RESPONSE
 figure;
-impz(b1, a1, 32);            % for visualization
+impz(b1, a1, 32);            % for visualization don't get the return value
 
 %% Z transform - Convolution
-% After you obtain the impulse response, you can apply the system
-% by convolving the impulse response of the system with the signal.
+% You can apply a system on a signal in two ways:
+% * Convolve with the impulse response (which we obtained just now).
+% * Use the `filter` functions (which uses tf coefficients).
 n = 0:1:5;
 x1 = (1/2).^n;
 y1 = conv(x1, h1);
@@ -134,12 +139,23 @@ y2 = filter(b1, a1, x1);
 stem(y2);
 title('Filter with b_1,a_1 and x_1');
 xlim([0 14]);
+% The above are the same! Except note that convolution creates a longer
+% "tail."
 
 %% freqz: digital frequency response
+% The frequency response is the z-transform of the impulse response. It
+% tells us how the system will act on each frequency of the input signal
+% (scaling and phase-shifting).
+%
+% This is a somewhat complicated setup -- you may want to save it to a
+% function if you have to do this repeatedly.
 [H, w] = freqz(b1, a1);
 
 Hdb = 20*log10(abs(H));
 Hph = rad2deg(unwrap(angle(H)));
+
+% Note the above, especially the `unwrap` function! Make sure to understand
+% what each of the functions above is for.
 
 figure;
 subplot(2, 1, 1);
@@ -161,6 +177,10 @@ xticklabels({'0', '\pi/2', '\pi'});
 title("Phase Response");
 
 %% Another example of freqz
+% By default, `freqz` knows nothing about the sampling rate, so the
+% frequency scale is digital. We can make it in analog frequency by
+% specifying the sampling rate of the digital signal.
+
 n = 1024;     % number of samples in frequency response
 fs = 20000;   % sampling frequency of input signal
 [H, f] = freqz(b1, a1, n, fs);
@@ -183,7 +203,7 @@ ylabel("Phase (deg)");
 xlim([0 fs/2]);
 title("Phase Response");
 
-%% Another example of freqz
+%% Yet another example of freqz
 zer = -0.5;
 pol = 0.9*exp(j*2*pi*[-0.3 0.3]');
 
@@ -217,7 +237,8 @@ xticklabels({'0', '\pi/2', '\pi'});
 title("Phase Response");
 
 %% freqs
-% Used for an analog filter.
+% Used for an analog filter. We won't use this here, since we're mostly
+% concerned with digital signal processing.
 a = [1 0.4 1];
 b = [0.2 0.3 1];
 
