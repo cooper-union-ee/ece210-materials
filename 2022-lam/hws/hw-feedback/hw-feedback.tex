@@ -1,6 +1,8 @@
 \documentclass{article}
 
 \usepackage{minted}
+\usepackage{amsmath}
+\usepackage{amsfonts}
 
 \title{ECE-210-A Homework Feedback}
 \author{Jonathan Lam}
@@ -40,6 +42,36 @@ clear(); clc(); close('all');
 \item[Use sections to separate code execution.] Sections are a double-edged sword. For one thing, they are very convenient for running a particular block of code, and they should be used to partition your code into logical segments. Being able to focus on and run a small bit of code, and inspect the workspace (environment) in the middle of your script is extremely helpful. On the other hand, it can cause problems that are addressed in the next bullet point.
 \item[Make sure your code runs in a clean environment.] First of all, make sure your code compiles and runs. Submitting code that has multiple errors throughout is a big red flag, because coding is a feedback-driven problem-solving process: you are expected to run your code, and check that the results match your intuition. If your code is not in a state where it can be run, it shows that you haven't gone through this process. Additionally (related to sections), make sure that if you clear your workspace and run all sections in your code from start to finish, that it runs correctly without errors. This is important because when you were debugging, you may have accidentally changed the behavior of your program.
 \item[Get familiar with standard debugging methods.] Understanding error messages is key. That should help you handle syntactical errors. For semantic errors (when your code compiles but doesn't do what you think it does), start with a minimal, working example and build up from there step by step, until something begins to fail. Learn how to build test cases and check the error from an expected or true value. Use the documentation until you get tired of it. This falls under the category of standard debugging tips that are common in software engineering.
+\end{description}
+
+\clearpage{}
+\section{Logical indexing and functions}
+\begin{description}
+\item[Logical indexing is different than multiplying by a logical matrix] The first question involves multiplying by a matrix of logical values, which acts like a layer mask: it preserves the domain, and sets all the values corresponding to FALSE to 0. In the second question, one needs to extract the x- and y-values that meet a certain condition. In this case, we want to condense the vectors to only those that match the condition; if we multiply by the logical matrix, we end up with a lot of spurious \mintinline{matlab}|[x, y] = [0, 0]| values. In other words, make sure you understand the difference between:
+\begin{minted}{matlab}
+A = [ 1 2 3 ; 4 5 6 ];
+B = logical([ 1 0 0 ; 0 1 0 ]);
+masked = A .* B;
+filtered = A(B);
+\end{minted}
+
+\item[Padding vectors] Don't pad a vector with arbitrary values to make it match the length of another vector. In the case of extending the the result of \mintinline{matlab}|diff()| to make it match the length of the original vector, do not pad with zeros -- this may create an anamolous discontinuity at the padded end. A more reasonable method is to pad with the first value at the beginning, or pad with the last value at the end. Alternatively, truncating the first or last value of the longer vector may be equally appropriate and doesn't involve introducing new datapoints.
+
+  There may be times when padding with zeros is acceptable, e.g., when using the FFT, which expects a zero-padded vector of length $2^n,\ n\in\mathbb{N}$.
+
+\item[The \mintinline{text}|sinc| function] As many of you discovered, the \mintinline{matlab}|sinc| function requires the Signal Processing Toolkit. With your school account, you may install this toolkit for free. (If you have trouble with installing a toolkit, please let me know.)
+
+  You may also implement the \mintinline{matlab}|sinc| function on your own. The formula for the (normalized) \mintinline{matlab}|sinc| is well-known: \[\text{sinc }x = \frac{\sin\pi x}{\pi x}\] The problem is the discontinuity (due to a division by 0 which leaves an undefined value at $x=0$), which will cause issues with your calculus functions. Since the limit is well-defined at $x=0$, we can be more explicit: \[\text{sinc }x=
+    \begin{cases}
+      1, & x=0 \\
+      \frac{\sin\pi x}{\pi x}, & x\ne 0
+    \end{cases}
+  \] We may implement this in MATLAB like so:
+\begin{minted}{matlab}
+x = % some vector
+y = sin(pi * x) ./ (pi * x) ;
+y(x == 0) = 1;  % note: logical indexing and broadcasting!
+\end{minted}
 \end{description}
 
 \end{document}
