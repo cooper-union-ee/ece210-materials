@@ -90,7 +90,7 @@ title('$$H_1(z)=\frac{z}{z-\frac{1}{2}}$$', 'interpreter', 'latex');
 % Example 2 : One pole, outer region is causal but not stable, inner region
 % is stable but not causal
 subplot(3, 1, 2);
-zplane(b2,a2);
+zplane(b2, a2);
 title('$$H_2(z)=\frac{z}{z-\frac{3}{2}}$$', 'interpreter', 'latex');
 
 % Example 3 : Two poles, outer region is causal, middle region is stable
