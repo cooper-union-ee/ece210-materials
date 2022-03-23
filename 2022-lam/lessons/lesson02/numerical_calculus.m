@@ -1,4 +1,4 @@
-%% Numerical estimation of integrals and derivatives
+%% Lesson 2c: Numerical estimation of integrals and derivatives
 % Numerical integration and differentiation are a staple of numerical
 % computing. We will now see how easy these are in MATLAB!
 clc; clear; close all;

@@ -1,4 +1,4 @@
-%% Lesson 3b: Functions
+%% Lesson 4a: Functions
 %
 % Objectives:
 % - Explore MATLAB's function-calling syntax and semantics.
@@ -130,8 +130,8 @@ grid on;
 %
 % Unlike anonymous functions, normal functions may include multiple
 % statements, may return multiple values, are invoked if appearing in an
-% expression without parentheses, and do not capture variables from the
-% surrounding scope/workspace.
+% expression without parentheses (unless you use a function handle), and 
+% do not capture variables from the surrounding scope/workspace.
 %
 % There are two types of normal functions: "public" normal functions, which
 % must be placed at the beginning of a *.m file with the same name as the
@@ -157,8 +157,11 @@ matlabpath;                 % Print out MATLAB path
 % Note that this section is before the local function definition because
 % the local function must be defined after all statements in the script.
 %
+% eye() is a builtin function. Here we call it with no arguments, so the
+% first argument's value defaults to 1.
 % distance() is a public function defined in the file distance.m
 % HelloWorld() is a local function defined below
+eye;
 distance(3, 4);
 HelloWorld("Jon", "Lam");   % Invoking HelloWorld and ignoring outputs
 
@@ -168,3 +171,9 @@ function [res1, res2] = HelloWorld(name1, name2)
     res1 = 3;
     res2 = [5 6];
 end
+
+%% Other fun stuff:
+% Function handles
+% `feval` on function handles and strings
+% Double-indexing using functions
+% Viewing source code using `edit`

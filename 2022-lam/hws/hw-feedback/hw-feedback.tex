@@ -1,0 +1,82 @@
+\documentclass{article}
+
+\usepackage{minted}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+
+\title{ECE-210-A Homework Feedback}
+\author{Jonathan Lam}
+\date{Spring 2022}
+
+\begin{document}
+
+\maketitle{}
+
+\section{Introduction to MATLAB}
+\label{sec:hw1}
+
+\begin{description}
+\item[Submission format] Please submit in *.m (plaintext) file format, rather than *.mlx. I should have made this a requirement at the beginning. While *.mlx (live script) files may be more visually appealling, they are more difficult to grade and may not be as cross-compatible with different versions of MATLAB.
+\item[Notes on style (in addition to the style notes on the assignment sheet)] Name your files consistently (e.g., \mintinline{text}|ece210_hw1_lam.m|), and use a header at the beginning of each file. It may look something like:
+\begin{minted}{matlab}
+% Homework 1
+% Jonathan Lam
+% ECE210
+% 02/16/2022
+clear(); clc(); close('all');
+
+%% Q1
+% ...
+\end{minted}
+  At the least, have your name and the commands to clear the workspace at the top of every script file\footnote{A script file is one you would run directly. This is as opposed to a file that defines a function or class, in which you do not want to call \mintinline{matlab}|clear(); clc(); close('all');| at the top of.}.
+  \item[\mintinline{matlab}|linspace()| vs. the colon operator] Be wary of the use cases and what the problem specifies! One is better suited for the case of a specified number of samples, and the other is better for cases of a specified frequency or period.
+\end{description}
+
+\clearpage{}
+\section{Vectorization and for loops}
+\label{sec:hw2}
+
+\begin{description}
+\item[Suppress intermediate and long outputs.] I don't need to see the outputs in the command window to evaluate your HW -- there are other ways. Printing large matrices (and other I/O in general) is also very slow (it will definitely mess with timing).
+\item[Keep your code DRY] (DRY = ``Don't repeat yourself,'' and is a common maxim in software engineering.) If you see a constant (e.g., 100, 1000) being repeated throughout your code, it's better (more maintainable, and better documented) to define it once as a variable and use that variable throughout. That way, you can easily change the variable by changing one value, or you can rename the variable using MATLAB's variable refactoring utilities.
+\item[Use sections to separate code execution.] Sections are a double-edged sword. For one thing, they are very convenient for running a particular block of code, and they should be used to partition your code into logical segments. Being able to focus on and run a small bit of code, and inspect the workspace (environment) in the middle of your script is extremely helpful. On the other hand, it can cause problems that are addressed in the next bullet point.
+\item[Make sure your code runs in a clean environment.] First of all, make sure your code compiles and runs. Submitting code that has multiple errors throughout is a big red flag, because coding is a feedback-driven problem-solving process: you are expected to run your code, and check that the results match your intuition. If your code is not in a state where it can be run, it shows that you haven't gone through this process. Additionally (related to sections), make sure that if you clear your workspace and run all sections in your code from start to finish, that it runs correctly without errors. This is important because when you were debugging, you may have accidentally changed the behavior of your program.
+\item[Get familiar with standard debugging methods.] Understanding error messages is key. That should help you handle syntactical errors. For semantic errors (when your code compiles but doesn't do what you think it does), start with a minimal, working example and build up from there step by step, until something begins to fail. Learn how to build test cases and check the error from an expected or true value. Use the documentation until you get tired of it. This falls under the category of standard debugging tips that are common in software engineering.
+\end{description}
+
+\clearpage{}
+\section{Logical indexing and functions}
+\begin{description}
+\item[Logical indexing is different than multiplying by a logical matrix] The first question involves multiplying by a matrix of logical values, which acts like a layer mask: it preserves the domain, and sets all the values corresponding to FALSE to 0. In the second question, one needs to extract the x- and y-values that meet a certain condition. In this case, we want to condense the vectors to only those that match the condition; if we multiply by the logical matrix, we end up with a lot of spurious \mintinline{matlab}|[x, y] = [0, 0]| values. In other words, make sure you understand the difference between:
+\begin{minted}{matlab}
+A = [ 1 2 3 ; 4 5 6 ];
+B = logical([ 1 0 0 ; 0 1 0 ]);
+masked = A .* B;
+filtered = A(B);
+\end{minted}
+
+\item[Padding vectors] Don't pad a vector with arbitrary values to make it match the length of another vector. In the case of extending the the result of \mintinline{matlab}|diff()| to make it match the length of the original vector, do not pad with zeros -- this may create an anamolous discontinuity at the padded end. A more reasonable method is to pad with the first value at the beginning, or pad with the last value at the end. Alternatively, truncating the first or last value of the longer vector may be equally appropriate and doesn't involve introducing new datapoints.
+
+  There may be times when padding with zeros is acceptable, e.g., when using the FFT, which expects a zero-padded vector of length $2^n,\ n\in\mathbb{N}$.
+
+\item[The \mintinline{text}|sinc| function] As many of you discovered, the \mintinline{matlab}|sinc| function requires the Signal Processing Toolkit. With your school account, you may install this toolkit for free. (If you have trouble with installing a toolkit, please let me know.)
+
+  You may also implement the \mintinline{matlab}|sinc| function on your own. The formula for the (normalized) \mintinline{matlab}|sinc| is well-known: \[\text{sinc }x = \frac{\sin\pi x}{\pi x}\] The problem is the discontinuity (due to a division by 0 which leaves an undefined value at $x=0$), which will cause issues with your calculus functions. Since the limit is well-defined at $x=0$, we can be more explicit: \[\text{sinc }x=
+    \begin{cases}
+      1, & x=0 \\
+      \frac{\sin\pi x}{\pi x}, & x\ne 0
+    \end{cases}
+  \] We may implement this in MATLAB like so:
+\begin{minted}{matlab}
+x = % some vector
+y = sin(pi * x) ./ (pi * x) ;
+y(x == 0) = 1;  % note: logical indexing and broadcasting!
+\end{minted}
+\end{description}
+
+\end{document}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:
