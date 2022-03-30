@@ -62,10 +62,13 @@ simplify(exp(log(x)));
 collect((x + 2) * (x + 3), x);
 
 %% Combine
-% tries to rewrite products of powers in the expression as a single power
+% Tries to rewrite products of powers in the expression as a single power
 combine(x^4 * x^3);
 
 % Has other options such as 'log' and 'sincos'
+assume(x > 0);
+combine(log(x) + log(2*x), 'log');
+combine(sin(x)*cos(x), 'sincos');
 
 %% Expand
 % Similar to `collect`, but expands all variables. More or less the
@@ -73,7 +76,7 @@ combine(x^4 * x^3);
 expand((x + 5)^3);
 
 %% Partial fraction decomposition
-partfrac((x^7+x^2)/(x^3 - 3*x + 2))
+partfrac((x^7+x^2)/(x^3 - 3*x + 2));
 
 %% poly2sym and sym2poly
 p = [1 2 3 4];

@@ -18,11 +18,25 @@
 \begin{document}
 \maketitle
 
-\noindent For each of the following scenarios, you will generate a filter, create magnitude-phase plots for the filter, and apply the filter.
+\makebox[\textwidth][c]{
+  \begin{tabular}{r|ccccc}
+    \hline\hline
+    Type & Type & $A_{pass}$ & $A_{stop}$ & Frequency specification \\
+    \hline
+    Butterworth & HPF & 5dB & 50dB & $F_{stop}=\fs/10,F_{pass}=\fs/5$\\
+    Chebyshev Type I & LPF & 2dB & 40dB & $F_{stop}=\fs/2,F_{pass}=\fs/4$ \\
+    Chebyshev Type II & bandstop & 5dB & 50dB & $F_{stop}=\fs/3,2\fs/3,F_{pass}=\fs/6,5\fs/6$ \\
+    Elliptic & bandpass & 5dB & 50dB & $F_{stop}=\fs/6,5\fs/6,F_{pass}=\fs/3,2\fs/3$ \\
+    \hline\hline
+  \end{tabular}
+}
+\\
 
-To begin with, generate a test signal $x$. This signal will be white noise (sample from a uniform distribution) sampled at 100kHz over an interval of 2 seconds. If you feel creative, you may choose an alternate signal; be sure to choose a signal with a large frequency content, and specify the sampling rate $F_s$ in a comment.
+\noindent For each of the above scenarios, you will generate a filter, create magnitude-phase plots for the filter, and apply the filter.
 
-For each filter, follow these steps (you may want to define this in a function so you don't have to repeat this code). Use subplots!
+To begin with, generate a test signal $x$. This signal will be white noise (sample from a uniform distribution) sampled at $F_s=100\text{kHz}$ over an interval of 2 seconds. If you feel creative, you may choose an alternate signal; be sure to choose a signal with a large frequency content, and specify the sampling rate $F_s$ in a comment.
+
+For each filter, follow these steps. As always, use functions to avoid repeating yourself, and use subplots to organize plots.
 \begin{enumerate}
 \item Use the given specifications to produce the lowest-order filter which meets the specs. Either:
   \begin{enumerate}
@@ -36,16 +50,4 @@ For each filter, follow these steps (you may want to define this in a function s
   
 \item Plot the Fourier transform of the filtered signal using \mintinline{matlab}|fft| and \mintinline{matlab}|plot|. Refer to the lecture examples for the proper way to use FFT and obtain the proper scaling (use one of the two scaling methods mentioned).
 \end{enumerate}
-\makebox[\textwidth][c]{
-  \begin{tabular}{r|ccccc}
-    \hline
-    Type & Type & $A_{pass}$ & $A_{stop}$ & Frequency specification \\
-    \hline\hline
-    Butterworth & HPF & 5dB & 50dB & $F_{stop}=\fs/10,F_{pass}=\fs/5$\\
-    Chebyshev Type I & LPF & 2dB & 40dB & $F_{stop}=\fs/2,F_{pass}=\fs/4$ \\
-    Chebyshev Type II & bandstop & 5dB & 50dB & $F_{stop}=\fs/3,2\fs/3,F_{pass}=\fs/6,5\fs/6$ \\
-    Elliptic & bandpass & 5dB & 50dB & $F_{stop}=\fs/6,5\fs/6,F_{pass}=\fs/3,2\fs/3$ \\
-    \hline\hline
-  \end{tabular}
-}
 \end{document}
