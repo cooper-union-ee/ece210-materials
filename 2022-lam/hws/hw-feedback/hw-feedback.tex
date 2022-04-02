@@ -74,6 +74,34 @@ y(x == 0) = 1;  % note: logical indexing and broadcasting!
 \end{minted}
 \end{description}
 
+\section{Gram Schmidt orthonormalization}
+\begin{description}
+\item[An open-ended problem] This assignment was the first (and only one) in this course that is really open-ended. You learned about an algorithm called Gram-Schmidt in Linear Algebra or in Signals and Systems. Now you're told to automate it. Take a specification and implement it. Word problems like this are common in computer programming.
+
+You might wonder as you go through the process: \textit{What is the most efficient way to do this? Should this part be vectorized? Can this part even be vectorized?} What you might not realize, however, is that programming is inherently an iterative process, and you won't know until you try it the first time. And then when you run your code and get results you don't expect, you debug it and refactor until you get a polished piece of code. I will also give you feedback when you submit your code, and you are allowed to resubmit code (for credit) because that's when you expect your code to improve. Don't expect to know what you're doing when you code; treat it as an interactive process.
+
+\item[To vectorize, or not to vectorize] Gram Schmidt is an algorithm that cannot be totally vectorized. This is because it is a sequenced algorithm; the second row depends on the first row, and the third depends on the first two, and so on and so forth. The columns are not independent and thus the algorithm is not parallelizable. Thus we need a \mintinline{matlab}{for} loop somewhere in the algorithm. However, it turns out that you can vectorize both \mintinline{matlab}{ortho_proj} and \mintinline{matlab}{is_orthonormal}, because they both don't have this restriction.
+
+\item[Matrix multiplication as inner product] A common definition for inner product of two (complex\footnote{Did you consider the case of complex vectors?}) vectors is the following:
+\[\langle x,y\rangle=\sum_ix_i^*y_i\]
+Now, assume we have in MATLAB two column vectors \mintinline{matlab}{x} and \mintinline{matlab}{y}. We can write this inner product\footnote{In math notation, this would be $x^Hy$, where $^H$ indicates the Hermitian transpose (conjugate transpose).} as the expression \mintinline{matlab}{dot(conj(x), y)}. However, there's a simpler way: \mintinline{matlab}{x' * y}. The place where this really shines is if you have two matrices $A$ and $B$ (with the same interpretation as given in the problem set, where each column is a vector in the set), and want to take all the dot products $\langle A_i,B_j\rangle$ where $A_i$ indicates vector/column $i$ from matrix $A$. In this case, you can do this very simply: \[C=A^HB\] The beauty is that $C_{ij}=A_i^HB_j=\langle A_i,B_j\rangle$.
+
+\item[Vectorizing \mintinline{matlab}{is_orthonormal}] Consider a set of vectors $M$. If the set of vectors is orthonormal, what do you expect the output of $M^HM$ to be? (Hint: see previous bullet point.)
+
+\item[Vectorizing \mintinline{matlab}{ortho_proj}] The projection of a vector on a basis is the sum of the projections of the vector on each of the basis vectors. You can write orthogonal projection using the formula given in your first linear algebra class: \[\text{proj}_{\{\vec{a_i}\}}\vec{b}=\sum_i\text{proj}_{\vec{a_i}}\vec{b}=\sum_i\frac{\langle\vec{a_i},\vec{b}\rangle}{||\vec{a_i}||^2}\vec{a_i}\] However, we can greatly simplify this for our \mintinline{matlab}{ortho_proj} case. First of all, if we assume that $\{\vec{a_i}\}$ is an orthonormal set of vectors, then $||\vec{a_i}||=||\vec{a_i}||^2=1$. The rest is simply three operations: an inner product, a regular (element-wise) product, and a sum. Can you vectorize the composition of these operations?
+
+\item[Additional error checking for Gram Schmidt] Consider the case when there are more vectors in the set of vectors than the dimensionality of the space (the number of elements per vector). (This will be the case when $M$ is wider than it is tall.) Then, some vectors will necessarily linearly dependent. This in turn will cause some of the vectors from Gram Schmidt orthonormalization to be zero. Do you handle this case? (Most submissions don't check if the norm is zero before normalizing, and they don't attempt to remove zero vectors from the basis during Gram Schmidt). Note that the assignment doesn't ask you to check these, but neither does it give you the assumption that the input vectors are necessarily linearly independent. (Luckily, a set of random vectors where $M$ is at least as tall as it is wide will very likely be a linearly-independent set.)
+
+\end{description}
+
+\section{Object-oriented programming and cell arrays}
+Not much to say about this assignment, it should be pretty straightforward.
+
+\section{Z-transform, polynomials, and basic filtering}
+\begin{description}
+\item[An intuitive reading of the pole-zero plot] Zeros near or on the unit circle cause increased attenuation (decreased gain), and poles near the unit circle (but hopefully not on the unit circle) caused increased gain. The rightmost part of the unit circle represents a zero frequency, whereas the leftmost part represents higher frequencies. We can use some combination of these facts to intuit what kind of filter (lowpass, highpass, bandpass, bandstop) a filter is by inspecting its pole-zero plot.
+\end{description}
+
 \end{document}
 
 %%% Local Variables:
